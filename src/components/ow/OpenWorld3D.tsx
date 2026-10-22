@@ -288,7 +288,7 @@ export default function OpenWorld3D() {
         </div>
       )}
 
-      {playing && hud && !hud.encounter && <Hud hud={hud} onPanel={() => setPanel((p) => !p)} onPause={() => gameRef.current?.togglePause()} onFullscreen={() => void fullscreen.toggle()} onDev={() => setDevOpen(true)} />}
+      {playing && hud && !hud.encounter && <Hud hud={hud} onPanel={() => setPanel((p) => !p)} onPause={() => gameRef.current?.togglePause()} onFullscreen={() => void fullscreen.toggle()} onDev={() => setDevOpen(true)} onSideQuest={(id) => gameRef.current?.selectSideQuest(id)} />}
 
       {/* Avisos */}
       <div className="pointer-events-none absolute left-1/2 top-28 z-20 flex -translate-x-1/2 flex-col items-center gap-2 font-sans">
@@ -557,7 +557,7 @@ function DevPhasePanel({ onSelect, onClose }: { onSelect: (step: number) => void
   );
 }
 
-function Hud({ hud, onPanel, onPause, onFullscreen, onDev }: { hud: OWHud; onPanel: () => void; onPause: () => void; onFullscreen: () => void; onDev: () => void }) {
+function Hud({ hud, onPanel, onPause, onFullscreen, onDev, onSideQuest }: { hud: OWHud; onPanel: () => void; onPause: () => void; onFullscreen: () => void; onDev: () => void; onSideQuest: (id: string) => void }) {
   const current = hud.steps.find((s) => s.current);
   return (
     <div className="pointer-events-none absolute inset-0 z-10 p-3 font-sans">
@@ -583,7 +583,7 @@ function Hud({ hud, onPanel, onPause, onFullscreen, onDev }: { hud: OWHud; onPan
           <div className="font-bold">Nivel {hud.sideQuest.level} · {hud.sideQuest.xp}/{hud.sideQuest.nextXp} XP</div>
           <div className="mt-1">{hud.sideQuest.active ? `Encargo activo: ${hud.sideQuest.active}` : "Encargos opcionales"}</div>
           <div className="mt-1 flex flex-wrap gap-1">
-            {hud.sideQuest.available.map(q => <button key={q.id} type="button" title={q.detail} disabled={q.done || hud.sideQuest!.level < q.requiredLevel || !!hud.dialogue || !!hud.training || !!hud.encounter} onClick={() => gameRef.current?.selectSideQuest(q.id)} className="rounded border border-cyan-600 px-1.5 py-1 disabled:opacity-40">{q.giver} {q.done ? "✓" : `(Nv.${q.requiredLevel})`}</button>)}
+            {hud.sideQuest.available.map(q => <button key={q.id} type="button" title={q.detail} disabled={q.done || hud.sideQuest!.level < q.requiredLevel || !!hud.dialogue || !!hud.training || !!hud.encounter} onClick={() => onSideQuest(q.id)} className="rounded border border-cyan-600 px-1.5 py-1 disabled:opacity-40">{q.giver} {q.done ? "✓" : `(Nv.${q.requiredLevel})`}</button>)}
           </div>
           <div className="mt-1 text-[10px] text-cyan-300">{hud.sideQuest.unlocked.join(" · ")}</div>
         </div>}
