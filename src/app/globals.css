@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-dark: #121628;
+  --color-bg-panel: #1c2440;
+  --color-bg-accent: #101426;
+  --color-frame-gold: #d4af37;
+  --color-frame-inner: #2d416e;
+  --color-btn-fill: #24345a;
+  --color-btn-hover: #3a548c;
+  --color-text-gold: #ffd700;
+  --color-hp-red: #dc2d2d;
+  --color-stamina-blue: #2896e6;
+  --font-title: "Impact", "Arial Black", sans-serif;
+}
+
+html, body, #__next {
+  height: 100%;
+  margin: 0;
+  background: #0a0c18;
+  color: #f0f5ff;
+  font-family: Georgia, "Times New Roman", serif;
+  overflow-x: hidden;
+}
+
+.ebf-frame {
+  position: relative;
+  background: linear-gradient(180deg, #1c2440 0%, #101426 100%);
+  border: 3px solid #2d416e;
+  border-radius: 10px;
+  box-shadow: 0 0 0 2px #d4af37, 0 8px 30px rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+}
+
+.ebf-frame-gold {
+  box-shadow: 0 0 0 2px #d4af37, 0 0 20px rgba(212, 175, 55, 0.3), inset 0 0 40px rgba(0,0,0,0.4);
+}
+
+.ebf-btn {
+  background: linear-gradient(180deg, #2d416e 0%, #1c2440 100%);
+  border: 2px solid #d4af37;
+  color: #f0f5ff;
+  font-weight: bold;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.12s;
+  text-shadow: 1px 1px 0 #000;
+  box-shadow: 0 3px 0 #0a0c18, inset 0 1px 0 rgba(255,255,255,0.1);
+  font-family: "Arial Black", Arial, sans-serif;
+  letter-spacing: 0.03em;
+  min-width: 140px;
+}
+.ebf-btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, #3a548c 0%, #24345a 100%);
+  color: #ffd700;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 #0a0c18, inset 0 1px 0 rgba(255,255,255,0.2), 0 0 12px rgba(212, 175, 55, 0.5);
+}
+.ebf-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ebf-btn-danger {
+  border-color: #c0392b;
+  background: linear-gradient(180deg, #5a1a16 0%, #2b0c0a 100%);
+}
+.ebf-btn-danger:hover:not(:disabled) {
+  background: linear-gradient(180deg, #8a2a22 0%, #40120e 100%);
+  color: #ffd700;
+  box-shadow: 0 4px 0 #0a0c18, 0 0 12px rgba(192, 57, 43, 0.6);
+}
+
+.title-font {
+  font-family: "Impact", "Arial Black", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stat-bar {
+  position: relative;
+  background: #0a0c18;
+  border: 1px solid #d4af37;
+  border-radius: 4px;
+  height: 22px;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  transition: width 0.4s ease;
+  border-radius: 3px;
+}
+
+.mist-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(200, 220, 255, 0.15), transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(180, 200, 255, 0.12), transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(150, 180, 255, 0.08), transparent 60%);
+  pointer-events: none;
+  animation: mistdrift 20s linear infinite;
+}
+
+@keyframes mistdrift {
+  0% { transform: translateX(-5%) translateY(0); }
+  50% { transform: translateX(5%) translateY(-2%); }
+  100% { transform: translateX(-5%) translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up { animation: fadeInUp 0.4s ease-out; }
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.8); }
+}
+.glow-pulse { animation: glowPulse 2s ease-in-out infinite; }
+
+.scroll-thin::-webkit-scrollbar { width: 8px; }
+.scroll-thin::-webkit-scrollbar-track { background: #0a0c18; }
+.scroll-thin::-webkit-scrollbar-thumb { background: #2d416e; border-radius: 4px; }
+.scroll-thin::-webkit-scrollbar-thumb:hover { background: #3a548c; }
+
+/* --- Modo mundo abierto (estilo Pokémon) --- */
+html {
+  overscroll-behavior: none;
+}
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  touch-action: manipulation;
+}
+.viewport-shell {
+  image-rendering: pixelated;
+  user-select: none;
+}
+
+@keyframes floatMark {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+.mark-float { animation: floatMark 1.2s ease-in-out infinite; }
+
+.blizzard-streaks {
+  background-image:
+    repeating-linear-gradient(118deg, transparent 0 14px, rgba(255,255,255,0.18) 14px 16px),
+    repeating-linear-gradient(112deg, transparent 0 22px, rgba(230,240,255,0.12) 22px 23px);
+  animation: blizzardDrift 0.45s linear infinite;
+}
+@keyframes blizzardDrift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: -90px 140px, -60px 110px; }
+}
+
+.paper-texture {
+  background-color: #0f1426;
+  background-image:
+    radial-gradient(ellipse at top, rgba(212, 175, 55, 0.04), transparent 70%),
+    linear-gradient(180deg, rgba(28,36,64,0.8), rgba(16,20,38,0.9));
+}
