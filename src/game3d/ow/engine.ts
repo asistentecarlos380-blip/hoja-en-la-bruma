@@ -3781,10 +3781,11 @@ export class OpenWorldGame {
     if (target > 0 || this.cinematicKeyLight.intensity > 0.01) {
       const focus = this.pos.clone();
       const id = d?.kind === "node" ? d.nodeId : "";
-      const actor = id === "p0_5" ? this.actors.find(a => a.id === "nezuko") :
-        id.startsWith("c1_sabito") ? this.npcs.find(n => n.def.id === "sabito") :
+      const cinematicActor = id === "p0_5" ? this.actors.find(a => a.id === "nezuko") : undefined;
+      const cinematicNpc = id.startsWith("c1_sabito") ? this.npcs.find(n => n.def.id === "sabito") :
         id === "c1_1" ? this.npcs.find(n => n.def.id === "urokodaki") : undefined;
-      if (actor) focus.copy(actor.human ? actor.human.group.position : actor.group.position);
+      const focusGroup = cinematicActor?.human.group ?? cinematicNpc?.group;
+      if (focusGroup) focus.copy(focusGroup.position);
       this.cinematicKeyLight.position.copy(focus).add(new THREE.Vector3(-2, 4, 2));
       this.cinematicFillLight.position.copy(focus).add(new THREE.Vector3(2, 2, -2));
     }
